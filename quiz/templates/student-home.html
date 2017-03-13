@@ -1,0 +1,5 @@
+<div>
+{% for quiz in object_list %}
+	<a href="/quiz/{{quiz.id}}">{{quiz.title}}</a>
+{% endfor %}
+</div>

@@ -28,4 +28,10 @@ urlpatterns = [
     url(r'^home/$', HomeView, name='home'),
     url(r'^create-profile/$', create_profile, name='create-profile'),
     url(r'^profile/$', Profile_view, name='profile'),
+     url(r'^quiz/', include('quiz.urls', namespace='quiz', app_name='quiz')),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

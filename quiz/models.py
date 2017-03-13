@@ -12,11 +12,6 @@ ACCOUNTS_TYPE_CHOICES = (
 
 )
 
-CITY_CHOICES = (
-	(0, 'Kochi'),
-	(1, 'Kannur'),
-
-)
 
 class ModelManager(models.Manager):
 	def get_queryset(self, fetch_all=False):
@@ -35,28 +30,47 @@ class DateMixin(models.Model):
 	class Meta:
 		abstract = True
 
-class School(DateMixin):
+class City(DateMixin):
 
 	name = models.CharField(max_length=1000)
-	address= models.CharField(max_length=1000, null=True, blank=True)
-	phone = models.CharField(max_length=20, null=True, blank=True)
-	city = models.IntegerField(choices=CITY_CHOICES, default=0)
+	district= models.CharField(max_length=1000, null=True, blank=True)
+	state = models.CharField(max_length=200, null=True, blank=True)
 	
 	def __str__(self):		 
 		return self.name
 
 
-		
+class Standard(DateMixin):
+
+	name = models.CharField(max_length=1000)
+	
+	def __str__(self):		 
+		return self.name
+
+
+class School(DateMixin):
+
+	name = models.CharField(max_length=1000)
+	address= models.CharField(max_length=1000, null=True, blank=True)
+	phone = models.CharField(max_length=20, null=True, blank=True)
+	city = models.ForeignKey(City, null=True, blank=True)
+	classes= models.ManyToManyField(Standard)
+
+	def __str__(self):		 
+		return self.name
+
+
 class Profile(DateMixin):
 	"""
-	All common details for candidates, and teachers
+	All common details for students, and teachers
 	"""
 	user = models.OneToOneField(User)
 	account_type = models.IntegerField(choices=ACCOUNTS_TYPE_CHOICES, default=0)
 	avatar = models.FileField(null=True, blank=True)
 	school = models.ForeignKey(School, null=True, blank=True)
+	standard = models.ForeignKey(Standard, null=True, blank=True)
 	phone = models.CharField(max_length=20, null=True, blank=True)
-	
+
 	def __str__(self):		 
 		return self.user.username
 
@@ -66,6 +80,9 @@ class Quiz(DateMixin):
 	title = models.CharField(max_length=1000)
 	start = models.DateTimeField()
 	end = models.DateTimeField()
+
+	def get_absolute_url(self):
+		return reverse('detail', kwargs={ 'pk': self.pk })
 
 	def __str__(self):		 
 		return self.title
@@ -78,7 +95,7 @@ class Question(DateMixin):
 	def __str__(self):		 
 		return self.content
 
-class Answer(DateMixin):
+class Choice(DateMixin):
 
 	question = models.ForeignKey(Question)
 	content = models.CharField(max_length=1000)
@@ -102,7 +119,7 @@ class TestEntries(DateMixin):
 
 	attempt = models.ForeignKey(Attempt)
 	question = models.ForeignKey(Question)
-	answer = models.ForeignKey(Answer)
+	answer = models.ForeignKey(Choice)
 
 	class Meta:
 		unique_together = ["attempt", "question"]

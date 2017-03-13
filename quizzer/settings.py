@@ -77,9 +77,9 @@ WSGI_APPLICATION = 'quizzer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'quizzer',
-        'USER': 'ajith',
-        'PASSWORD': 'ajith',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
+        'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
     }

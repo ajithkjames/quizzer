@@ -1,0 +1,31 @@
+{% if done %}
+	<div>
+	you already attended the quiz!
+	</div>
+{% else %}
+
+	{% if questions%}
+	<form action="" method="post" enctype="multipart/form-data">
+	{% for question in questions %}
+	<div>
+	<div>Question number : {{ forloop.counter0 }}</div>
+	<div>{{question}}</div>
+		{% for choice in question.choice_set.all %}
+	  <input type="radio" name="{{question.id}}" value="{{choice.id}}"> {{choice.content}}<br>
+		{% endfor %}
+	</div>
+	<br>
+	<br>
+	{% endfor %}
+	<input type="submit" value="Submit">{% csrf_token %}
+	</form> 
+	{% endif %}
+
+	{% if my_data%}
+	<div>
+		RESULT
+		<div>
+		{{my_data}}
+	</div>
+	{% endif %}
+{% endif %}
