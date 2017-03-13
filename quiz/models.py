@@ -92,6 +92,9 @@ class Attempt(DateMixin):
 	user = models.ForeignKey(User)
 	quiz = models.ForeignKey(Quiz)
 
+	class Meta:
+		unique_together = ["user", "quiz"]
+
 	def __str__(self):		 
 		return self.quiz.title
 
@@ -101,5 +104,8 @@ class TestEntries(DateMixin):
 	question = models.ForeignKey(Question)
 	answer = models.ForeignKey(Answer)
 
+	class Meta:
+		unique_together = ["attempt", "question"]
+
 	def __str__(self):		 
-		return self.attempt
+		return self.attempt.quiz.title
