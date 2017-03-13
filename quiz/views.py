@@ -98,3 +98,12 @@ class testprogress(LoginRequiredMixin,View):
 			testentry.save()
 		return redirect('/')
 
+class result(LoginRequiredMixin,View):
+	template_name= 'result.html'
+
+	def get(self, request, pk):
+		quiz=Quiz.objects.get(pk=pk)
+		attempt=Attempt.objects.get(quiz=quiz,user=request.user)
+		entries=TestEntries.objects.filter(attempt=attempt)
+			
+		return render(request, self.template_name, {'entries': entries})
