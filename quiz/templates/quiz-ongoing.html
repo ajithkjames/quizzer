@@ -16,8 +16,8 @@
 		<form action="" method="post" enctype="multipart/form-data">
 		{% for question in questions %}
 		<div>
-		<div>Question number : {{ forloop.counter }}</div>
-		<div>{{question}}</div>
+		<div><h3>Question {{ forloop.counter }} : {{question}}</h3></div>
+		
 			{% for choice in question.choice_set.all %}
 		  <input type="radio" name="{{question.id}}" value="{{choice.id}}"> {{choice.content}}<br>
 			{% endfor %}
@@ -25,7 +25,7 @@
 		<br>
 		<br>
 		{% endfor %}
-		<input type="submit" value="Submit">{% csrf_token %}
+		<input class="btn btn-primary text-center" type="submit" value="Submit">{% csrf_token %}
 		</form> 
 		{% endif %}
 

@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^create-profile/$', create_profile, name='create-profile'),
     url(r'^profile/$', Profile_view, name='profile'),
      url(r'^quiz/', include('quiz.urls', namespace='quiz', app_name='quiz')),
+     url(r'^signup/$', Signup.as_view()),
 ]
 
 

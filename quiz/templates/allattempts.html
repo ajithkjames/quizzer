@@ -1,0 +1,16 @@
+
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+	
+	<h1><u>QUIZ RESULTS </u>- {% with attempts|first as a %}
+	  {{a}}
+	{% endwith %}</h1>
+	<div>
+	{% for attempt in attempts%}
+	<div><h3><a href="/quiz/result/{{attempt.id}}">{{attempt.quiz.title}}-by {{attempt.user}}</a></h3></div>
+	{% endfor %}
+	</div>
+{% endblock %}

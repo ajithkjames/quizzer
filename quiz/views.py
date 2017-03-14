@@ -7,10 +7,33 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from datetime import datetime
 from.models import *
 from.forms import *
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
+
+class Signup(View):
+	template_name = "signup.html"
+	def __init__(self, **kwargs):
+		pass
+
+	def get(self, request):
+		return render(request, self.template_name)
+	
+	def post(self, request):
+		try:
+			first_name = request.POST.get("first_name")
+			last_name = request.POST.get("last_name")
+			email = request.POST.get("email")
+			raw_password = request.POST.get("password")
+			new_user = User.objects.create_user(email, first_name= first_name, last_name = last_name, email = email)
+			new_user.set_password(raw_password)
+			new_user.save()
+			login(self.request, new_user)
+		except:
+			return redirect('/')
+		return redirect('/')
 
 @login_required
 def HomeView(request):
@@ -48,6 +71,7 @@ def create_profile(request):
 		}
 		return render(request, 'createprofile.html', context)
 
+@login_required
 def Profile_view(request):
 	profile=Profile.objects.get(user=request.user)
 	context = {
@@ -59,13 +83,18 @@ class StudentHome(LoginRequiredMixin, generic.ListView):
 	template_name= 'student-home.html'
 
 	def get_queryset(self):
-		return Quiz.objects.all()
+		return Quiz.objects.filter(start__lte=datetime.now(),end__gte=datetime.now())
 
-class DetailsView(LoginRequiredMixin, generic.DetailView):
-	model = Quiz
-
+class DetailsView(LoginRequiredMixin, View):
 	template_name= 'quiz-details.html'      
-	
+	def get(self, request, pk):
+		quiz=Quiz.objects.get(pk=pk)
+		try:
+			attempt=Attempt.objects.get(quiz=quiz,user=request.user)
+			return render(request, self.template_name, {'object': quiz,'attempt':attempt})
+		except Exception as e:
+			print e
+		return render(request, self.template_name, {'object': quiz})
 
 class testprogress(LoginRequiredMixin,View):
 	template_name= 'quiz-ongoing.html'
@@ -99,20 +128,21 @@ class testprogress(LoginRequiredMixin,View):
 			answer=Choice.objects.get(id=value)
 			testentry=TestEntries(attempt=attempt,question=question,answer=answer)
 			testentry.save()
-		return redirect('/')
+		return redirect('/quiz/myresults')
 
 class result(LoginRequiredMixin,View):
 	template_name= 'result.html'
 
 	def get(self, request, pk):
 		attempt=Attempt.objects.get(pk=pk)
-		entries=TestEntries.objects.filter(attempt=attempt)
+		totalmarks=attempt.quiz.question_set.all().count()
+		entries=TestEntries.objects.filter(attempt=attempt).order_by('-created_at')
 		mark=0
 		for entry in entries:
 			if entry.answer.is_correct==True:
 				mark+=1
 			
-		return render(request, self.template_name, {'entries': entries,'mark':mark})
+		return render(request, self.template_name, {'entries': entries,'mark':mark,'totalmarks':totalmarks})
 
 
 class myresults(LoginRequiredMixin,View):
@@ -122,3 +152,18 @@ class myresults(LoginRequiredMixin,View):
 		attempt=Attempt.objects.filter(user=request.user)
 	
 		return render(request, self.template_name, {'attempt': attempt})
+
+
+class TeacherHome(LoginRequiredMixin, generic.ListView):
+	template_name= 'teacher-home.html'
+
+	def get_queryset(self):
+		return Quiz.objects.filter(author=self.request.user)
+
+
+class AllAttempts(LoginRequiredMixin,View):
+	template_name= 'allattempts.html'
+
+	def get(self, request, pk):
+		attempts=Attempt.objects.filter(quiz=pk).order_by('-created_at')
+		return render(request, self.template_name, {'attempts': attempts})

@@ -2,11 +2,11 @@
 
 {% block content %}
 
-	<h1>MY QUIZ RESULTS</h1>
+	<h1><u>MY QUIZ RESULTS</u></h1>
 	<div>
 	{% for attempt in attempt %}
 	<div>
-		<a href="/quiz/result/{{attempt.id}}">{{attempt.quiz.title}}</a>
+		<h3><a href="/quiz/result/{{attempt.id}}">{{attempt.quiz.title}}</a></h3>
 	<div>
 	{% endfor %}
 	</div>

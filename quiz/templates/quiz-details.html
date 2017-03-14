@@ -1,25 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
-	{{object.title}}
+	<div class="row">
+	<div class="col-sm-3"></div>
+  		<div class="col-sm-6">
+			<div>
+			<h2>{{object.title|title}}</h2>
+			</div>
+			<div>
+			<img src="/media/{{object.author.profile.avatar}}" width="150px">
+			</div>
+			<div>
+			AUTHOR : {{object.author}}
+			</div>
+			<br>
+			<br>
+			<div>
+			starts at : {{object.start|date}}
+			</div>
+			<div>
+			ends at : {{object.end|date}} {{object.attempt_set.count}}
+			</div>
+			<div>
+			Total Attendees :  {{object.attempt_set.count}}
+			</div>
+			<br><br>
+			{% if user.profile.account_type == 0 %}
+				{% if attempt %}
+					<a href="/quiz/result/{{attempt.id}}">
+					<button class="btn btn-primary text-center">view results</button>
+				</a>
+				{% else %}
+					<a href="/quiz/progress/{{object.id}}/">
+					<button class="btn btn-md btn-primary text-center">start</button>
+					</a>
+				{% endif %}
+			{% else %}
+				<a href="/quiz/allattempts/{{object.id}}/">
+					<button class="btn btn-md btn-primary text-center">View test results </button>
+					</a>
+			{% endif %}
+		</div>
 	</div>
-	<div>
-	<img src="/media/{{object.author.profile.avatar}}">
-	</div>
-	<div>
-	{{object.author}}
-	</div>
-	<br>
-	<br>
-	<div>
-	starts at : {{object.start|date}}
-	</div>
-	<div>
-	ends at : {{object.end|date}}
-	</div>
-
-	<a href="/quiz/progress/{{object.id}}/">
-	<button>start</button>
-	</a>
 {% endblock %}

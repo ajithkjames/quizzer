@@ -2,6 +2,12 @@
 
 {% block content %}
 	<div>
-		{{profile.user.get_full_name.capitalize|title}}
+		<h1>{{profile.user.get_full_name.capitalize|title}}</h1>
 	</div>
+	<div>
+		<img src="/media/{{profile.avatar}}" width="150px">
+	</div>
+	<h3>School : {{profile.school}}</h3>
+	<h3>Standard : {{profile.standard}}</h3>
+	<h3>Phone : {{profile.phone}}</h3>
 {% endblock %}
