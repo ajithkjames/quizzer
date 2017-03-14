@@ -109,6 +109,16 @@ class Attempt(DateMixin):
 	user = models.ForeignKey(User)
 	quiz = models.ForeignKey(Quiz)
 
+	@property
+	def marks(self):
+		entries=TestEntries.objects.filter(attempt=self)
+		mark=0
+		for entry in entries:
+			if entry.answer.is_correct==True:
+				mark+=1
+		entries=self.testentries_set.all()
+		return mark
+
 	class Meta:
 		unique_together = ["user", "quiz"]
 

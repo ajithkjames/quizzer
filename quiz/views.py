@@ -168,3 +168,17 @@ class AllAttempts(LoginRequiredMixin,View):
 	def get(self, request, pk):
 		attempts=Attempt.objects.filter(quiz=pk).order_by('-created_at')
 		return render(request, self.template_name, {'attempts': attempts})
+
+class LeaderBoard(LoginRequiredMixin, generic.ListView):
+	template_name= 'leader-board.html'
+
+	def get_queryset(self):
+		return Quiz.objects.all()
+
+class QuizLeaders(LoginRequiredMixin,View):
+	template_name= 'leaders.html'
+
+	def get(self, request, pk):
+		
+		a=sorted(Attempt.objects.filter(quiz=pk), key=lambda t: -t.marks)
+		return render(request, self.template_name, {'attempts': a})

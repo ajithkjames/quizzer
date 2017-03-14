@@ -11,6 +11,8 @@ urlpatterns = [
    url(r'^myresults/$',views.myresults.as_view(), name='myresults'),
    url(r'^teacher-home/$', views.TeacherHome.as_view(), name='teacher_home'),
    url(r'^allattempts/(?P<pk>[0-9]+)/$',views.AllAttempts.as_view(), name='allattempts'),
+   url(r'^leader-board/$', views.LeaderBoard.as_view(), name='leader_board'),
+   url(r'^leader-board/(?P<pk>[0-9]+)/$', views.QuizLeaders.as_view(), name='leaders'),
 ]
 
 if settings.DEBUG:
