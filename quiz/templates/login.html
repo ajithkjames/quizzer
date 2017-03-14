@@ -1,9 +1,19 @@
-<form method="post" action="{% url 'login' %}" >
-    {% csrf_token %}
-    <p><label for="id_username">Username:</label>
-    {{ form.username }}</p>
-    <p><label for="id_password">Password:</label>
-    {{ form.password }}</p>
-    <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo' value="login/">Login</button>
-    <input type="hidden" name="next" value="{{ next }}" />
-</form> 
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container ">
+	<div class="col-sm-6 center">
+		<form method="post" action="{% url 'login' %}" >
+	    {% csrf_token %}
+	    <div class="form-group col-8">
+	    <p><label for="id_username">Username:</label>
+	    {{ form.username }}</p>
+	    <p><label for="id_password">Password:</label>
+	    {{ form.password }}</p>
+	    <button type='submit' name='btn_login' class="btn btn-primary text-center" value="login/">Login</button>
+	    <input type="hidden" name="next" value="{{ next }}" />
+	    </div>
+		</form> 
+	</div>
+</div>
+{% endblock %}

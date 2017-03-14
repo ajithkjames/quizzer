@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
  <form action="" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.account_type }}
@@ -6,3 +9,4 @@
     {{ form.phone }}
 <button  type="submit">submit</button>
  </form>
+{% endblock %}

@@ -8,6 +8,7 @@ urlpatterns = [
    url(r'^(?P<pk>[0-9]+)/$',views.DetailsView.as_view(), name='detail'),
    url(r'^progress/(?P<pk>[0-9]+)/$',views.testprogress.as_view(), name='progress'),
    url(r'^result/(?P<pk>[0-9]+)/$',views.result.as_view(), name='result'),
+   url(r'^myresults/$',views.myresults.as_view(), name='myresults'),
 ]
 
 if settings.DEBUG:

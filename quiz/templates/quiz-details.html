@@ -1,20 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <div>
-{{object.title}}
-</div>
-<div>
-<img src="/media/{{object.author.profile.avatar}}">
-</div>
-<div>
-{{object.author}}
-</div>
-<br>
-<br>
-<div>
-starts at : {{object.start|date}}
-</div>
-<div>
-ends at : {{object.end|date}}
-</div>
-<a href="/quiz/progress/{{object.id}}/">
-<button>start</button>
-</a>
+	{{object.title}}
+	</div>
+	<div>
+	<img src="/media/{{object.author.profile.avatar}}">
+	</div>
+	<div>
+	{{object.author}}
+	</div>
+	<br>
+	<br>
+	<div>
+	starts at : {{object.start|date}}
+	</div>
+	<div>
+	ends at : {{object.end|date}}
+	</div>
+
+	<a href="/quiz/progress/{{object.id}}/">
+	<button>start</button>
+	</a>
+{% endblock %}

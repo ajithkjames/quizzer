@@ -1,6 +1,13 @@
-<h1>ACTIVE QUIZES</h1>
-<div>
-{% for quiz in object_list %}
-	<a href="/quiz/{{quiz.id}}">{{quiz.title}}</a>
-{% endfor %}
-</div>
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<h1>ACTIVE QUIZES</h1>
+	<div>
+	{% for quiz in object_list %}
+	<div>
+		<a href="/quiz/{{quiz.id}}">{{quiz.title}}</a>
+	<div>
+	{% endfor %}
+	</div>
+{% endblock %}

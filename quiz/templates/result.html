@@ -1,5 +1,16 @@
-{% for entry in entries %}
+{% extends 'base.html' %}
+
+{% block content %}
 <div>
-	{{entry.answer.is_correct}}
+	<h1>Your Marks : {{mark}} / {{entries.count}}</h1>
 </div>
-{% endfor %}
+	{% for entry in entries %}
+		<div>
+		<div>
+		<blockquote><h2>QUESTION {{ forloop.counter }} : {{entry.question.content}}</h2>
+		<div>Your answer: {{entry.answer.content}} - {{entry.answer.is_correct}}</div>
+		</blockquote>
+		</div>
+		</div>
+	{% endfor %}
+{% endblock %}

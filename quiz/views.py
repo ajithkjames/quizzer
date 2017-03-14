@@ -72,11 +72,14 @@ class testprogress(LoginRequiredMixin,View):
 
 	def get(self, request, pk):
 		quiz=Quiz.objects.get(pk=pk)
-		done=Attempt.objects.filter(quiz=quiz,user=request.user)
-		if not done:
+		try:
+		    done=Attempt.objects.get(quiz=quiz,user=request.user)
+		except Exception as e:
+			print e
 			attempt=Attempt(quiz=quiz)
 			attempt.user=request.user
 			attempt.save()
+			done=''
 		questions=[]
 		question=Question.objects.filter(quiz=pk)
 		for q in question:
@@ -102,8 +105,20 @@ class result(LoginRequiredMixin,View):
 	template_name= 'result.html'
 
 	def get(self, request, pk):
-		quiz=Quiz.objects.get(pk=pk)
-		attempt=Attempt.objects.get(quiz=quiz,user=request.user)
+		attempt=Attempt.objects.get(pk=pk)
 		entries=TestEntries.objects.filter(attempt=attempt)
+		mark=0
+		for entry in entries:
+			if entry.answer.is_correct==True:
+				mark+=1
 			
-		return render(request, self.template_name, {'entries': entries})
+		return render(request, self.template_name, {'entries': entries,'mark':mark})
+
+
+class myresults(LoginRequiredMixin,View):
+	template_name= 'myresults.html'
+
+	def get(self, request):
+		attempt=Attempt.objects.filter(user=request.user)
+	
+		return render(request, self.template_name, {'attempt': attempt})

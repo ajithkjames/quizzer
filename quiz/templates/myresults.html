@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<h1>MY QUIZ RESULTS</h1>
+	<div>
+	{% for attempt in attempt %}
+	<div>
+		<a href="/quiz/result/{{attempt.id}}">{{attempt.quiz.title}}</a>
+	<div>
+	{% endfor %}
+	</div>
+{% endblock %}
