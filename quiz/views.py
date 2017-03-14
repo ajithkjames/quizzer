@@ -10,6 +10,7 @@ from django.contrib.auth import login
 from datetime import datetime
 from.models import *
 from.forms import *
+from .mixins import *
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
@@ -154,7 +155,7 @@ class myresults(LoginRequiredMixin,View):
 		return render(request, self.template_name, {'attempt': attempt})
 
 
-class TeacherHome(LoginRequiredMixin, generic.ListView):
+class TeacherHome(ProtectedTeacherView, generic.ListView):
 	template_name= 'teacher-home.html'
 
 	def get_queryset(self):
