@@ -27,16 +27,16 @@
 			<br><br>
 			{% if user.profile.account_type == 0 %}
 				{% if attempt %}
-					<a href="/quiz/result/{{attempt.id}}">
+					<a href="{% url 'quiz:result' pk=attempt.id %}">
 					<button class="btn btn-primary text-center">view results</button>
 				</a>
 				{% else %}
-					<a href="/quiz/progress/{{object.id}}/">
+					<a href="{% url 'quiz:progress' pk=object.id %}">
 					<button class="btn btn-md btn-primary text-center">start</button>
 					</a>
 				{% endif %}
 			{% else %}
-				<a href="/quiz/allattempts/{{object.id}}/">
+				<a href="{% url 'quiz:allattempts' object.id %}">
 					<button class="btn btn-md btn-primary text-center">View test results </button>
 					</a>
 			{% endif %}

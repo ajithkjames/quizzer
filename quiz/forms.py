@@ -14,3 +14,12 @@ class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ['account_type','avatar','school','phone']
+
+
+class QuizForm(forms.ModelForm):
+	
+	class Meta:
+		model = Quiz
+		fields = ['title','start','end']
+
+

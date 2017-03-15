@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.views import generic
 from django.views.generic.edit import CreateView,UpdateView,DeleteView
 from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
@@ -79,6 +80,13 @@ def Profile_view(request):
 		"profile": profile,
 	}
 	return render(request, 'profile.html', context)
+
+
+class edit_profile(LoginRequiredMixin, UpdateView):
+	model = Profile
+	template_name= 'profile_form.html'
+	fields = ['avatar','school','standard','phone']
+
 
 class StudentHome(LoginRequiredMixin, generic.ListView):
 	template_name= 'student-home.html'
@@ -179,3 +187,27 @@ class QuizLeaders(LoginRequiredMixin,View):
 		
 		a=sorted(Attempt.objects.filter(quiz=pk), key=lambda t: -t.marks)
 		return render(request, self.template_name, {'attempts': a})
+
+
+@login_required
+def CreateQuiz(request):
+	form = QuizForm(request.POST)
+	if hasattr(request.user, 'profile'):
+		if request.method == 'POST':
+			
+				
+				if form.is_valid():
+					quiz = form.save(commit=False)
+					quiz.author = request.user
+					quiz.save()
+					return redirect('/')
+				context = {
+					"form": form,
+				}
+				return render(request, 'create-quiz.html', context)
+	else:
+		return redirect('/create-profile')
+	context = {'form': form}
+	return render(request, 'create-quiz.html', context)
+
+

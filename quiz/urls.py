@@ -13,6 +13,7 @@ urlpatterns = [
    url(r'^allattempts/(?P<pk>[0-9]+)/$',views.AllAttempts.as_view(), name='allattempts'),
    url(r'^leader-board/$', views.LeaderBoard.as_view(), name='leader_board'),
    url(r'^leader-board/(?P<pk>[0-9]+)/$', views.QuizLeaders.as_view(), name='leaders'),
+   url(r'^create-quiz/$', views.CreateQuiz, name='create-quiz'),
 ]
 
 if settings.DEBUG:
