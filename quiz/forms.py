@@ -10,7 +10,7 @@ class LoginForm(AuthenticationForm):
                                widget=forms.PasswordInput(attrs={'class': 'form-control', 'name': 'password'}))
 
 class ProfileForm(forms.ModelForm):
-
-    class Meta:
-        model = Profile
-        fields = ['account_type','avatar','school','phone']
+	
+	class Meta:
+		model = Profile
+		fields = ['account_type','avatar','school','phone']

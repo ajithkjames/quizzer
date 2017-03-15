@@ -86,7 +86,7 @@ class StudentHome(LoginRequiredMixin, generic.ListView):
 	def get_queryset(self):
 		return Quiz.objects.filter(start__lte=datetime.now(),end__gte=datetime.now())
 
-class DetailsView(LoginRequiredMixin, View):
+class QuizDetailsView(LoginRequiredMixin, View):
 	template_name= 'quiz-details.html'      
 	def get(self, request, pk):
 		quiz=Quiz.objects.get(pk=pk)
@@ -106,21 +106,18 @@ class testprogress(LoginRequiredMixin,View):
 		    done=Attempt.objects.get(quiz=quiz,user=request.user)
 		except Exception as e:
 			print e
-			attempt=Attempt(quiz=quiz)
-			attempt.user=request.user
-			attempt.save()
 			done=''
 		questions=[]
-		question=Question.objects.filter(quiz=pk)
-		for q in question:
-			choices=Choice.objects.filter(question=q)
-			questions.append((q, choices))
-			
+		question=Question.objects.filter(quiz=pk).order_by('created_at')
+				
 		return render(request, self.template_name, {'questions': question,'done':done})
 
 	def post(self, request, pk):
-		my_data = request.POST
 		quiz=Quiz.objects.get(pk=pk)
+		attempt=Attempt(quiz=quiz)
+		attempt.user=request.user
+		attempt.save()
+		my_data = request.POST
 		attempt=Attempt.objects.get(quiz=quiz,user=request.user)
 		print my_data
 		del my_data['csrfmiddlewaretoken']

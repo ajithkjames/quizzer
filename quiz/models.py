@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from datetime import date
 from datetime import datetime, timedelta
 
-# Create your models here.
+
 ACCOUNTS_TYPE_CHOICES = (
 	(0, 'Student'),
 	(1, 'Teacher'),
@@ -33,8 +33,7 @@ class DateMixin(models.Model):
 class City(DateMixin):
 
 	name = models.CharField(max_length=1000)
-	district= models.CharField(max_length=1000, null=True, blank=True)
-	state = models.CharField(max_length=200, null=True, blank=True)
+	
 	
 	def __str__(self):		 
 		return self.name
