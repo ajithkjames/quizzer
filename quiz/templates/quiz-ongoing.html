@@ -18,9 +18,12 @@
 		<div>
 		<div><h3>Question {{ forloop.counter }} : {{question}}</h3></div>
 		
-			{% for choice in question.choice_set.all %}
-		  <input type="radio" name="{{question.id}}" value="{{choice.id}}"> {{choice.content}}<br>
-			{% endfor %}
+			
+		  <input type="radio" name="{{question.id}}" value="{{question.choice1}}"> {{question.choice1}}<br>
+		  <input type="radio" name="{{question.id}}" value="{{question.choice2}}">{{question.choice2}}<br>
+		  <input type="radio" name="{{question.id}}" value="{{question.choice3}}"> {{question.choice3}}<br>
+		  <input type="radio" name="{{question.id}}" value="{{question.choice4}}"> {{question.choice4}}<br>
+			
 		</div>
 		<br>
 		<br>

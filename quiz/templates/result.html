@@ -2,13 +2,13 @@
 
 {% block content %}
 <div>
-	<h1>Marks Scored : {{mark}} / {{totalmarks}}</h1>
+	<h1>Marks Scored : {{attempt.marks}} / {{totalmarks}}</h1>
 </div>
 	{% for entry in entries %}
 		<div>
 		<div>
 		<blockquote><h2>QUESTION {{ forloop.counter }} : {{entry.question.content}}</h2>
-		<div>Your answer: {{entry.answer.content}} - {{entry.answer.is_correct}}</div>
+		<div>Your answer: {{entry.answer}} - {{entry.is_correct}}</div>
 		</blockquote>
 		</div>
 		</div>

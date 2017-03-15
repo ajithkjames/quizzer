@@ -21,6 +21,9 @@ from django.contrib.auth import views
 from quiz.forms import LoginForm
 from quiz.views import *
 
+
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.login, {'template_name': 'login.html', 'authentication_form': LoginForm,'redirect_authenticated_user': True},name='login'),

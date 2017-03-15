@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div>
+		<h1>{{object.user.get_full_name.capitalize|title}}</h1>
+	</div>
+	<div>
+		<img src="/media/{{profile.avatar}}" width="150px">
+	</div>
+	<h3>School : {{object.school}}</h3>
+	<h3>Standard : {{object.standard}}</h3>
+	<h3>Phone : {{object.phone}}</h3>
+
+	
+{% endblock %}

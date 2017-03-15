@@ -84,6 +84,9 @@ class Quiz(DateMixin):
 	start = models.DateField(null=True, blank=True)
 	end = models.DateField(null=True, blank=True)
 
+	def questions(self):
+		return Question.objects.filter(quiz=self)
+
 	def get_absolute_url(self):
 		return reverse('detail', kwargs={ 'pk': self.pk })
 
@@ -94,6 +97,12 @@ class Question(DateMixin):
 
 	quiz = models.ForeignKey(Quiz)
 	content = models.CharField(max_length=1000)
+	choice1 = models.CharField(max_length=1000,null=True, blank=True)
+	choice2 = models.CharField(max_length=1000,null=True, blank=True)
+	choice3= models.CharField(max_length=1000,null=True, blank=True)
+	choice4 = models.CharField(max_length=1000,null=True, blank=True)
+	answer = models.CharField(max_length=1000,null=True, blank=True)
+
 
 	def __str__(self):		 
 		return self.content
@@ -117,7 +126,7 @@ class Attempt(DateMixin):
 		entries=TestEntries.objects.filter(attempt=self)
 		mark=0
 		for entry in entries:
-			if entry.answer.is_correct==True:
+			if entry.is_correct==True:
 				mark+=1
 		entries=self.testentries_set.all()
 		return mark
@@ -132,7 +141,8 @@ class TestEntries(DateMixin):
 
 	attempt = models.ForeignKey(Attempt)
 	question = models.ForeignKey(Question)
-	answer = models.ForeignKey(Choice)
+	answer = models.CharField(max_length=1000,null=True, blank=True)
+	is_correct = models.BooleanField(default=False)
 
 	class Meta:
 		unique_together = ["attempt", "question"]

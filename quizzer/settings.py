@@ -38,8 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'quiz',
     'bootstrap3',
+    
+
 
 ]
 
@@ -80,7 +83,7 @@ WSGI_APPLICATION = 'quizzer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'myproject',
+        'NAME': 'myproject1',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
         'HOST': 'localhost',
@@ -133,3 +136,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 LOGIN_URL= '/'
 LOGIN_REDIRECT_URL = '/home'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'PAGE_SIZE': 10
+}

@@ -15,6 +15,14 @@ class CityResource(resources.ModelResource):
 class CityAdmin(ImportExportModelAdmin):
     resource_class = CityResource
 
+class QuizResource(resources.ModelResource):
+
+    class Meta:
+        model = Quiz
+
+class QuizAdmin(ImportExportModelAdmin):
+    resource_class = QuizResource  
+
 class QuestionResource(resources.ModelResource):
 
     class Meta:
@@ -34,7 +42,7 @@ class ChoiceAdmin(ImportExportModelAdmin):
 admin.site.register(City,CityAdmin)
 admin.site.register(Profile)
 admin.site.register(School)
-admin.site.register(Quiz)
+admin.site.register(Quiz,QuizAdmin)
 admin.site.register(Question,QuestionAdmin)
 admin.site.register(Choice,ChoiceAdmin)
 admin.site.register(Attempt)

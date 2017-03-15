@@ -131,8 +131,11 @@ class testprogress(LoginRequiredMixin,View):
 		del my_data['csrfmiddlewaretoken']
 		for key, value in my_data.iteritems():
 			question=Question.objects.get(id=key)
-			answer=Choice.objects.get(id=value)
-			testentry=TestEntries(attempt=attempt,question=question,answer=answer)
+			print question, value
+			# answer=Choice.objects.get(id=value)
+			testentry=TestEntries(attempt=attempt,question=question,answer=value)
+			if question.answer==value:
+				testentry.is_correct=True
 			testentry.save()
 		return redirect('/quiz/myresults')
 
@@ -143,12 +146,8 @@ class result(LoginRequiredMixin,View):
 		attempt=Attempt.objects.get(pk=pk)
 		totalmarks=attempt.quiz.question_set.all().count()
 		entries=TestEntries.objects.filter(attempt=attempt).order_by('-created_at')
-		mark=0
-		for entry in entries:
-			if entry.answer.is_correct==True:
-				mark+=1
 			
-		return render(request, self.template_name, {'entries': entries,'mark':mark,'totalmarks':totalmarks})
+		return render(request, self.template_name, {'entries': entries,'attempt':attempt,'totalmarks':totalmarks})
 
 
 class myresults(LoginRequiredMixin,View):
@@ -164,7 +163,7 @@ class TeacherHome(ProtectedTeacherView, generic.ListView):
 	template_name= 'teacher-home.html'
 
 	def get_queryset(self):
-		return Quiz.objects.filter(author=self.request.user)
+		return Quiz.objects.all()
 
 
 class AllAttempts(LoginRequiredMixin,View):
@@ -210,4 +209,12 @@ def CreateQuiz(request):
 	context = {'form': form}
 	return render(request, 'create-quiz.html', context)
 
+class MyStudents(ProtectedTeacherView, generic.ListView):
+	template_name= 'mystudents.html'
 
+	def get_queryset(self):
+		return Profile.objects.filter(school=self.request.user.profile.school,account_type=0)
+
+class StudentDetails(generic.DetailView):
+    model = Profile
+    template_name = 'studentdetails.html'
