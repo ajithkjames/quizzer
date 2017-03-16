@@ -13,7 +13,7 @@ class ProfileForm(forms.ModelForm):
 	
 	class Meta:
 		model = Profile
-		fields = ['account_type','avatar','school','phone']
+		fields = ['account_type','avatar','school','phone','standard']
 
 
 class QuizForm(forms.ModelForm):
