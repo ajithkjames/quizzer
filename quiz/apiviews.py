@@ -1,8 +1,12 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets,generics
+from rest_framework.views import APIView
 from rest_framework import generics
 from .serializers import *
 from .models import *
+from rest_framework.response import Response
+from rest_framework import status
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -13,12 +17,14 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 class QuizViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
 
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
+
+class ProfileViewSet(viewsets.ModelViewSet):
+
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class QuestionViewSet(generics.ListAPIView):
@@ -27,3 +33,29 @@ class QuestionViewSet(generics.ListAPIView):
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Question.objects.filter(quiz=pk)
+
+
+class AttemptViewSet(viewsets.ModelViewSet):
+
+    queryset = Attempt.objects.all()
+    serializer_class = AttemptSerializer
+
+class TestEntriesViewSet(viewsets.ModelViewSet):
+
+    queryset = TestEntries.objects.all()
+    serializer_class = TestEntriesSerializer
+
+class EntriesViewSet(APIView):
+
+    def get(self, request,pk, format=None):
+        pk = self.kwargs['pk']
+        entries = TestEntries.objects.filter(attempt=pk)
+        serializer = TestEntriesSerializer(entries, many=True)
+        return Response(serializer.data)
+
+    def post(self, request,pk, format=None):
+        serializer = TestEntriesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -8,10 +8,14 @@ from .apiviews import *
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'quizes', QuizViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'attempts', AttemptViewSet)
+router.register(r'testentries', TestEntriesViewSet)
 
 
 urlpatterns = [
-   url(r'^api/quiz/(?P<pk>[0-9]+)/$', QuestionViewSet.as_view()),
+   url(r'^api/quiz/(?P<pk>[0-9]+)/$', QuestionViewSet.as_view(), name='Questions'),
+   url(r'^api/entries/(?P<pk>[0-9]+)/$', EntriesViewSet.as_view(), name='Questions'),
    url(r'^api/', include(router.urls)),
    url(r'^student-home/$', views.StudentHome.as_view(), name='student_home'),
    url(r'^(?P<pk>[0-9]+)/$',views.QuizDetailsView.as_view(), name='detail'),

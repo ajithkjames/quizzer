@@ -149,7 +149,13 @@ class TestEntries(DateMixin):
 	attempt = models.ForeignKey(Attempt)
 	question = models.ForeignKey(Question)
 	answer = models.CharField(max_length=1000,null=True, blank=True)
-	is_correct = models.BooleanField(default=False)
+	is_correct = models.BooleanField(default=False, blank=True)
+
+	def save( self, *args, **kw ):
+		answer=self.question.answer
+		if answer==self.answer:
+			self.is_correct=True
+		super( TestEntries, self ).save( *args, **kw )
 
 	class Meta:
 		unique_together = ["attempt", "question"]
