@@ -183,9 +183,9 @@ class QuizLeaders(LoginRequiredMixin,View):
 	template_name= 'leaders.html'
 
 	def get(self, request, pk):
-		
+		quiz=Quiz.objects.get(pk=pk)
 		a=sorted(Attempt.objects.filter(quiz=pk), key=lambda t: -t.marks)
-		return render(request, self.template_name, {'attempts': a,'pk':pk})
+		return render(request, self.template_name, {'attempts': a,'pk':pk,'quiz':quiz})
 
 
 @login_required
@@ -226,8 +226,10 @@ class LeaderCity(LoginRequiredMixin,View):
 	template_name= 'leaderscity.html'
 
 	def get(self, request, pk,city):
+		quiz=Quiz.objects.get(pk=pk)
+		city=City.objects.get(pk=city)
 		a=sorted(Attempt.objects.filter(quiz=pk, city=city), key=lambda t: -t.marks)
-		return render(request, self.template_name, {'attempts': a})
+		return render(request, self.template_name, {'attempts': a,'quiz': quiz,'city':city})
 
 class QuizLeadersCities(LoginRequiredMixin,View):
 	template_name= 'cities.html'
@@ -241,8 +243,10 @@ class LeaderSchool(LoginRequiredMixin,View):
 	template_name= 'leadersschool.html'
 
 	def get(self, request, pk,school):
+		quiz=Quiz.objects.get(pk=pk)
+		school=School.objects.get(pk=school)
 		a=sorted(Attempt.objects.filter(quiz=pk, school=school), key=lambda t: -t.marks)
-		return render(request, self.template_name, {'attempts': a})
+		return render(request, self.template_name, {'attempts': a,'quiz': quiz,'school':school})
 
 class QuizLeadersSchools(LoginRequiredMixin,View):
 	template_name= 'schools.html'

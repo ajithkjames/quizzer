@@ -4,19 +4,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
- {% with attempts|first as a %}
 	<div>
 		<h2><a href="/quiz/leader-board/{{pk}}/cities/">Leaders By City</a> &emsp;&emsp; <a href="/quiz/leader-board/{{pk}}/schools/">Leaders By School</a></h2>
 	</div>
 	<div>
 	<h1><u>Quiz Leaders </u>-
-	  {{a}}{{pk}}
+	  {{quiz}}
 	</h1>
 	</div>
-{% endwith %}
+
 	<div>
+	{% if attempts %}
 	{% for attempt in attempts%}
 	<div><h3><a href="/quiz/result/{{attempt.id}}">{{attempt.user|title}} </a>- {{attempt.marks}} marks</h3></div>
 	{% endfor %}
+	{% else %}
+	<h3> Nobody Attended the quiz yet!</h3>
+	{% endif %}
 	</div>
 {% endblock %}

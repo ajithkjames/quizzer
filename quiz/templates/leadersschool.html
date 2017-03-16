@@ -4,16 +4,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
- {% with attempts|first as a %}
+
 	<div>
-	<h1><u>Quiz Leaders </u>-
-	  {{a}}
+	<h1><u>Quiz Leaders({{school}}) </u>-
+	  {{quiz}}
 	</h1>
 	</div>
-{% endwith %}
+	{% if attempts %}
 	<div>
 	{% for attempt in attempts%}
 	<div><h3><a href="/quiz/result/{{attempt.id}}">{{attempt.user|title}} </a>- {{attempt.marks}} marks</h3></div>
 	{% endfor %}
 	</div>
+	{% else %}
+	<h3> Nobody from {{school}} Attended the quiz yet!</h3>
+	{% endif %}
+	
 {% endblock %}
