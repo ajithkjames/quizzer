@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<span><h2>Quiz:&nbsp{{quiz}}</h2></span>
+	<h1><u>Cities</u></h1>
+	<div>
+	{% for city in cities %}
+	<div>
+		<h3>
+		<a href="{% url 'quiz:leader_city' city.id quiz.id %}">{{city.name}}</a>
+		</h3>
+	<div>
+	{% endfor %}
+	</div>
+{% endblock %}

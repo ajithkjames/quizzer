@@ -120,6 +120,13 @@ class Attempt(DateMixin):
 
 	user = models.ForeignKey(User)
 	quiz = models.ForeignKey(Quiz)
+	city = models.ForeignKey(City,null=True, blank=True)
+	school = models.ForeignKey(School,null=True, blank=True)
+
+	def save( self, *args, **kw ):
+		self.city=self.user.profile.school.city
+		self.school=self.user.profile.school
+		super( Attempt, self ).save( *args, **kw )
 
 	@property
 	def marks(self):

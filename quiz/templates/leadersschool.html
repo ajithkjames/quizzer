@@ -6,11 +6,8 @@
 {% block content %}
  {% with attempts|first as a %}
 	<div>
-		<h2><a href="/quiz/leader-board/{{pk}}/cities/">Leaders By City</a> &emsp;&emsp; <a href="/quiz/leader-board/{{pk}}/schools/">Leaders By School</a></h2>
-	</div>
-	<div>
 	<h1><u>Quiz Leaders </u>-
-	  {{a}}{{pk}}
+	  {{a}}
 	</h1>
 	</div>
 {% endwith %}

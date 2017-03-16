@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<span><h2>Quiz:&nbsp{{quiz}}</h2></span>
+	<h1><u>Schools</u></h1>
+	<div>
+	{% for school in schools %}
+	<div>
+		<h3>
+		<a href="{% url 'quiz:leader_school' school.id quiz.id %}">{{school.name}}</a>
+		</h3>
+	<div>
+	{% endfor %}
+	</div>
+{% endblock %}
