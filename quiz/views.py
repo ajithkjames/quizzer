@@ -215,6 +215,9 @@ class MyStudents(ProtectedTeacherView, generic.ListView):
 	def get_queryset(self):
 		return Profile.objects.filter(school=self.request.user.profile.school,account_type=0)
 
-class StudentDetails(generic.DetailView):
-    model = Profile
-    template_name = 'studentdetails.html'
+class StudentDetails(ProtectedTeacherView,View):
+	template_name = 'studentdetails.html'
+	def get(self, request, pk):
+		profile=Profile.objects.get(user=pk)
+		attempts=Attempt.objects.filter(user=pk).order_by('-created_at')
+		return render(request, self.template_name, {'attempts': attempts,'object':profile})
