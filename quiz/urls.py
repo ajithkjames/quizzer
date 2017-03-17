@@ -8,6 +8,7 @@ from .apiviews import *
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'quizes', QuizViewSet)
+router.register(r'activequizes', ActiveQuizViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'attempts', AttemptViewSet)
 router.register(r'testentries', TestEntriesViewSet)

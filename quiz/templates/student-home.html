@@ -1,12 +1,28 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div ng-app="myApp" ng-controller="myCtrl">
-Full Name: [[firstName]]
+<div ng-app="myApp" ng-controller="studentHomeCtrl">
+
+<h1><u>All QUIZES</u></h1>
+<div>
+	<h3 ng-repeat="quiz in quizListData" >
+		<a href="/quiz/[[quiz.id]]">[[quiz.title]]</a>
+	</h3>
+</div>
 
 </div>
 
-	<h1><u>ACTIVE QUIZES</u></h1>
+
+
+
+
+
+
+
+
+
+
+	<!-- <h1><u>ACTIVE QUIZES</u></h1>
 	<div>
 	{% for quiz in object_list %}
 	<div>
@@ -15,5 +31,5 @@ Full Name: [[firstName]]
 		</h3>
 	<div>
 	{% endfor %}
-	</div>
+	</div> -->
 {% endblock %}

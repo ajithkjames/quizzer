@@ -21,6 +21,11 @@ class QuizViewSet(viewsets.ModelViewSet):
     queryset = Quiz.objects.all()
     serializer_class = QuizSerializer
 
+class ActiveQuizViewSet(viewsets.ModelViewSet):
+
+    queryset = Quiz.objects.filter(start__lte=datetime.now(),end__gte=datetime.now())
+    serializer_class = QuizSerializer
+
 class ProfileViewSet(viewsets.ModelViewSet):
 
     queryset = Profile.objects.all()
