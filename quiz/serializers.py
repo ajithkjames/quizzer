@@ -8,17 +8,18 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id','first_name','last_name','username', 'email', 'password')
 
-class QuizSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Quiz
-
-        fields = ['id','author','title','start','end']
-        depth = 1
-
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = '__all__'
+        depth = 2
+
+class QuizSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(source='author.profile')
+    class Meta:
+        model = Quiz
+
+        fields = ['id','author','title','start','end','profile']
         depth = 2
 
 class QuestionSerializer(serializers.ModelSerializer):
