@@ -37,7 +37,7 @@
                         <ul class="nav navbar-nav">
                           <!-- <li class=""><a href="/">Home</a></li> -->
                           <li class=""><a href="/">Active Quizes</a></li>
-                          <li class=""><a href="/quiz/myresults">My Results</a></li>
+                          <li class=""><a href="{%url 'quiz:results'%}">Results</a></li>
                           <li class=""><a href="/quiz/leader-board">Leader Board</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -66,7 +66,7 @@
                       <div class="collapse navbar-collapse" id="myNavbar">
                         <ul class="nav navbar-nav">
                           <!-- <li class=""><a href="/">Home</a></li> -->
-                          <li class=""><a href="{% url 'quiz:mystudents' %}">My students</a></li>
+                          <li class=""><a href="{% url 'quiz:students' %}">students</a></li>
                           <li class=""><a href="/quiz/leader-board">Leader Board</a></li>
                           <!-- <li class=""><a href="/quiz/create-quiz">Create Quiz</a></li> -->
                           

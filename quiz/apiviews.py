@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User, Group
+from datetime import datetime
 from rest_framework import viewsets,generics
 from rest_framework.views import APIView
 from rest_framework import generics
-from .serializers import *
-from .models import *
 from rest_framework.response import Response
 from rest_framework import status
-
+from quiz.models import User,Quiz,Profile,Attempt,TestEntries,Question
+from quiz.serializers import UserSerializer,QuizSerializer,ProfileSerializer,QuestionSerializer,TestEntriesSerializer,AttemptSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):

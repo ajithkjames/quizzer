@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
-from .models import *
 from rest_framework import serializers
+from .models import User,Profile,Quiz,Question,Attempt,TestEntries
 
 
 class UserSerializer(serializers.ModelSerializer):

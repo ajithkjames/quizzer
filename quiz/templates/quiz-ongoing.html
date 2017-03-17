@@ -17,7 +17,7 @@
 		<div>
 		<form action="" method="post" enctype="multipart/form-data">
 		 <div ng-repeat="question in questions">
-		 	<h3>Question {{ forloop.counter }} : [[question.content]]</h3>
+		 	<h3>Question [[$index + 1]]: [[question.content]]</h3>
 		
 		  <input type="radio" name="[[question.id]]" value="[[question.choice1]]"> [[question.choice1]]<br>
 		  <input type="radio" name="[[question.id]]" value="[[question.choice2]]">[[question.choice2]]<br>
