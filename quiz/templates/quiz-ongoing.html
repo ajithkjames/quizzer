@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block content %}{{pk}}
+<div ng-app="myApp" ng-controller="quizProgressCtrl" ng-init="init('{{quiz}}')">
 	{% if done %}
 	<div>
 	<h1>you already attended the quiz!</h1>
@@ -13,23 +14,20 @@
 	{% else %}
 
 		{% if questions%}
-		<form action="" method="post" enctype="multipart/form-data">
-		{% for question in questions %}
 		<div>
-		<div><h3>Question {{ forloop.counter }} : {{question}}</h3></div>
+		<form action="" method="post" enctype="multipart/form-data">
+		 <div ng-repeat="question in questions">
+		 	<h3>Question {{ forloop.counter }} : [[question.content]]</h3>
 		
-			
-		  <input type="radio" name="{{question.id}}" value="{{question.choice1}}"> {{question.choice1}}<br>
-		  <input type="radio" name="{{question.id}}" value="{{question.choice2}}">{{question.choice2}}<br>
-		  <input type="radio" name="{{question.id}}" value="{{question.choice3}}"> {{question.choice3}}<br>
-		  <input type="radio" name="{{question.id}}" value="{{question.choice4}}"> {{question.choice4}}<br>
-			
+		  <input type="radio" name="[[question.id]]" value="[[question.choice1]]"> [[question.choice1]]<br>
+		  <input type="radio" name="[[question.id]]" value="[[question.choice2]]">[[question.choice2]]<br>
+		  <input type="radio" name="[[question.id]]" value="[[question.choice3]]"> [[question.choice3]]<br>
+		  <input type="radio" name="[[question.id]]" value="[[question.choice4]]"> [[question.choice4]]<br>
 		</div>
-		<br>
-		<br>
-		{% endfor %}
 		<input class="btn btn-primary text-center" type="submit" value="Submit">{% csrf_token %}
-		</form> 
+		</form>
+		</div>
+		 
 		{% endif %}
 
 		{% if my_data%}
@@ -40,4 +38,5 @@
 		</div>
 		{% endif %}
 	{% endif %}
+</div>
 {% endblock %}

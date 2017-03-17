@@ -22,12 +22,26 @@ app.controller('studentHomeCtrl', function($scope, $http) {
 
 
 app.controller('quizDetailsCtrl', function($scope, $http) {
-		$scope.quizDetailss=[];
         $scope.init = function (quiz_id) {
             console.log(quiz_id);
             $http.get('/quiz/api/activequizes/' + quiz_id, { cache: true }).success(function (data) {
             	$scope.quizDetails= data;
                 console.log("data",$scope.quizDetails)
+                });
+            };
+});
+
+
+app.controller('quizProgressCtrl', function($scope, $http) {
+		$scope.questions=[];
+        $scope.init = function (quiz_id) {
+            console.log(quiz_id);
+            $http.get('/quiz/api/quiz/' + quiz_id, { cache: true }).success(function (data) {
+            	angular.forEach(data.results, function (item) {
+	                    $scope.questions.push(item);
+	                    
+	                });
+                console.log("data",$scope.questions)
                 });
             };
 });

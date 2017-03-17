@@ -118,7 +118,7 @@ class testprogress(LoginRequiredMixin,View):
 		questions=[]
 		question=Question.objects.filter(quiz=pk).order_by('created_at')
 				
-		return render(request, self.template_name, {'questions': question,'done':done})
+		return render(request, self.template_name, {'questions': question,'done':done,'quiz':pk})
 
 	def post(self, request, pk):
 		quiz=Quiz.objects.get(pk=pk)
