@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^edit-profile/(?P<pk>[0-9]+)/$', edit_profile.as_view(), name='edit-profile'),
      url(r'^quiz/', include('quiz.urls', namespace='quiz', app_name='quiz')),
      url(r'^signup/$', Signup.as_view()),
+     
 ]
 
 
