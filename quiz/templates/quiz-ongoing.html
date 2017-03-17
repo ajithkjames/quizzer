@@ -15,17 +15,26 @@
 
 		{% if questions%}
 		<div>
-		<form action="" method="post" enctype="multipart/form-data">
+		
 		 <div ng-repeat="question in questions">
-		 	<h3>Question [[$index + 1]]: [[question.content]]</h3>
+		 <div ng-if="question_index == $index && status == 0">
+           <h3>Question [[$index + 1]]: [[question.content]]</h3>
 		
 		  <input type="radio" name="[[question.id]]" value="[[question.choice1]]"> [[question.choice1]]<br>
 		  <input type="radio" name="[[question.id]]" value="[[question.choice2]]">[[question.choice2]]<br>
 		  <input type="radio" name="[[question.id]]" value="[[question.choice3]]"> [[question.choice3]]<br>
 		  <input type="radio" name="[[question.id]]" value="[[question.choice4]]"> [[question.choice4]]<br>
+            
+        </div>
+		 	
 		</div>
-		<input class="btn btn-primary text-center" type="submit" value="Submit">{% csrf_token %}
-		</form>
+		<hr>
+		<div ng-if="status == 0">
+	    <button ng-click="next()">Next</button>
+	   </div>
+		<div ng-if="status == 1">
+		<div><h1>SUBMIT THE QUIZ?</h1></div>
+	    <button ng-click="submit()">submit</button>
 		</div>
 		 
 		{% endif %}

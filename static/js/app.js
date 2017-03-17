@@ -29,11 +29,33 @@ app.controller('quizDetailsCtrl', function($scope, $http) {
 });
 
 
-app.controller('quizProgressCtrl', function($scope, $http) {
+app.controller('quizProgressCtrl', function($scope, $http,$window) {
+		$scope.questions=[];
         $scope.init = function (quiz_id) {
             console.log(quiz_id);
             $http.get('/quiz/api/quiz/' + quiz_id, { cache: true }).success(function (data) {
-	                    $scope.questions=data.results;      
+            	angular.forEach(data.results, function (item) {
+	                    $scope.questions.push(item);
+	                    
+	                });
+                console.log("data",$scope.questions)
                 });
             };
+        $scope.question_index = 0;
+	    $scope.question = {};
+	    $scope.status=0;
+
+	    $scope.next = function () {
+	        if ($scope.question_index >= $scope.questions.length - 1) {
+	        	$scope.status=1;
+	        } else {
+	            $scope.question_index++;
+	        }
+	        console.log($scope.questions.length + '/' + $scope.question_index);
+	    };
+
+	    $scope.submit = function (question) {
+	        console.log("sumitted")
+	        $window.location.href = '/quiz/results';
+	    }
 });
